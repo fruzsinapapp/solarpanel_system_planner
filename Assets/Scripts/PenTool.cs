@@ -8,6 +8,7 @@ using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Microsoft.MixedReality.Toolkit;
+using UnityEngine.UI;
 
 public class PenTool : MonoBehaviour
 {
@@ -40,28 +41,7 @@ public class PenTool : MonoBehaviour
     }
     private LineController currentLine;
     protected readonly Dictionary<int, PointerData> pointerDataToUpdate = new Dictionary<int, PointerData>();
-    private void Update()
-    {
-        testing();
-    }
-    public void testing()
-    {
-        foreach (var p in pointerDataToUpdate)
-        {
-            PointerData pointerData = p.Value;
-            IMixedRealityPointer pointer = pointerData.pointer;
-            Debug.Log(pointer.Rays);
-            if (pointer.IsInteractionEnabled
-                && pointer.Rays != null
-                && pointer.Rays.Length > 0
-                && Input.GetKeyDown(KeyCode.LeftAlt))
-            {
 
-                Debug.Log("HELLO RAY");
-            }
-
-        }
-    }
     public void SpawnNewDot()
     {
         if (currentLine == null)
@@ -70,6 +50,7 @@ public class PenTool : MonoBehaviour
         }
 
         GameObject dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent);
+        dot.tag = "Selectable";
         Debug.Log("X:" + GetMousePosition().x);
         Debug.Log("Y:" + GetMousePosition().y);
         Debug.Log("Z:" + GetMousePosition().z);

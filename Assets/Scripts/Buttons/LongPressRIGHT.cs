@@ -20,8 +20,11 @@ public class LongPressRIGHT : MonoBehaviour
     {
         if(isClicked)
         {
-            objectToMove.transform.position += new Vector3(0.01f, 0, 0);
-        }
-        
+            objectToMove = Selection.GlobalGameObject;
+            if (objectToMove != null)
+            {
+                objectToMove.transform.position += new Vector3(0.01f, 0, 0);
+            }
+        }  
     }
 }

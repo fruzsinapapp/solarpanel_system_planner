@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LongPressUP : MonoBehaviour
 {
-    public GameObject objectToMove;
+    private GameObject objectToMove;
     private bool isClicked;
     private void OnMouseDown()
     {
@@ -20,8 +20,11 @@ public class LongPressUP : MonoBehaviour
     {
         if(isClicked)
         {
-            objectToMove.transform.position += new Vector3(0, 0.01f, 0);
-        }
-        
+            objectToMove = Selection.GlobalGameObject;
+            if (objectToMove != null )
+            {
+                objectToMove.transform.position += new Vector3(0, 0.01f, 0);
+            }
+        }  
     }
 }

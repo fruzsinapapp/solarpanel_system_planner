@@ -10,7 +10,7 @@ public class Selection : MonoBehaviour
     public Material selectionMaterial;
     public  Material originalMaterial;
 
-    private Transform selection;
+    private Transform selectedObject;
     private RaycastHit rayCastHit;
 
     private bool selectionIsActive;
@@ -27,24 +27,39 @@ public class Selection : MonoBehaviour
                 selection.GetComponent<MeshRenderer>().material = originalMaterial;
             }
             */
-            if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out rayCastHit))
+            if (Physics.Raycast(ray, out rayCastHit))
             {
-                selection = rayCastHit.transform;
-                
-                if (selection.CompareTag("Selectable"))
+                if (selectionIsActive && rayCastHit.transform.CompareTag("Selectable"))
                 {
-                    selection.GetComponent<MeshRenderer>().material = selectionMaterial;
-                    selectionIsActive = true;
+                    selectedObject.GetComponent<MeshRenderer>().material = originalMaterial;
+                    GlobalGameObject = null;
+                    selectionIsActive = false;
+                    selectedObject= null;
                 }
-                else
+                if (!selectionIsActive && rayCastHit.transform.CompareTag("Selectable"))
                 {
-                    selection = null;
+                    selectedObject = rayCastHit.transform;
+
+                    if (selectedObject.CompareTag("Selectable"))
+                    {
+                        selectedObject.GetComponent<MeshRenderer>().material = selectionMaterial;
+                        selectionIsActive = true;
+                    }
+                    else
+                    {
+                        selectedObject = null;
+                    }
                 }
+
             }
         }
-        if(selection!= null)
+        if(selectedObject!= null)
         {
-            GlobalGameObject = selection.gameObject;  
-        }   
+            GlobalGameObject = selectedObject.gameObject;  
+        }
+        else
+        {
+
+        }
     }
 }

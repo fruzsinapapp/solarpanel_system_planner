@@ -15,6 +15,10 @@ public class Selection : MonoBehaviour
 
     private bool selectionIsActive;
 
+    static public void SelectDotFromTheList()
+    {
+        GlobalGameObject = PenTool.listOfDots[0];
+    }
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

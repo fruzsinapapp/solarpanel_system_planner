@@ -19,6 +19,13 @@ public class PenTool : MonoBehaviour
     [Header("Lines")]
     [SerializeField] private GameObject linePrefab;
     [SerializeField] Transform lineParent;
+
+    public static List<GameObject> listOfDots = new List<GameObject>();
+
+    public void Start()
+    {
+        //listOfDots = new List<GameObject>();
+    }
     protected class PointerData
     {
         public readonly IMixedRealityPointer pointer;
@@ -51,6 +58,11 @@ public class PenTool : MonoBehaviour
 
         GameObject dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent);
         dot.tag = "Selectable";
+        listOfDots.Add(dot);
+        if(listOfDots.Count == 1)
+        {
+            Selection.SelectDotFromTheList();
+        }
         Debug.Log("X:" + GetMousePosition().x);
         Debug.Log("Y:" + GetMousePosition().y);
         Debug.Log("Z:" + GetMousePosition().z);

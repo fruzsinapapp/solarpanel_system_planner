@@ -7,20 +7,21 @@ public class Selection : MonoBehaviour
 {
     public static GameObject GlobalGameObject;
 
-    public Material selectionMaterial;
-    public Material originalMaterial;
+    private Material selectionMaterial;
+    private Material originalMaterial;
 
     private GameObject selectedObject;
     private RaycastHit rayCastHit;
 
     private bool selectionIsActive;
-
-    static public void SelectDotFromTheList()
+    public void SelectDotFromTheList()
     {
-        GlobalGameObject = PenTool.listOfDots[0];
+        SelectDot(PenTool.listOfDots[0].gameObject);
+        //GlobalGameObject = PenTool.listOfDots[0];
     }
     public void SelectDot(GameObject dotToSelect)
     {
+        selectionMaterial = Resources.Load<Material>("SelectedMaterial");
         Debug.Log(dotToSelect.GetComponent<MeshRenderer>().material);
         dotToSelect.GetComponent<MeshRenderer>().material = selectionMaterial;
 
@@ -28,6 +29,7 @@ public class Selection : MonoBehaviour
     }
     public void UnSelectDot(GameObject dotToSelect)
     {
+        originalMaterial = Resources.Load<Material>("OriginalMaterial");
         dotToSelect.GetComponent<MeshRenderer>().material = originalMaterial;
         GlobalGameObject = null;
 
@@ -35,7 +37,6 @@ public class Selection : MonoBehaviour
     void Update()
     {
         //Select by clicking
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -54,7 +55,6 @@ public class Selection : MonoBehaviour
                     selectionIsActive = true;
                     SelectDot(selectedObject.gameObject);
                 }
-
             }
         }
     }

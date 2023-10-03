@@ -9,6 +9,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Microsoft.MixedReality.Toolkit;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEditor;
 
 public class PenTool : MonoBehaviour
 {
@@ -22,10 +24,6 @@ public class PenTool : MonoBehaviour
 
     public static List<GameObject> listOfDots = new List<GameObject>();
 
-    public void Start()
-    {
-        //listOfDots = new List<GameObject>();
-    }
     protected class PointerData
     {
         public readonly IMixedRealityPointer pointer;
@@ -52,21 +50,14 @@ public class PenTool : MonoBehaviour
     public void SpawnNewDot()
     {
         if (currentLine == null)
-        {
             currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
-        }
 
+        Selection s = new Selection();
         GameObject dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent);
         dot.tag = "Selectable";
         listOfDots.Add(dot);
-        if(listOfDots.Count == 1)
-        {
-            Selection.SelectDotFromTheList();
-        }
-        Debug.Log("X:" + GetMousePosition().x);
-        Debug.Log("Y:" + GetMousePosition().y);
-        Debug.Log("Z:" + GetMousePosition().z);
         currentLine.AddPoint(dot.transform);
+        s.SelectDotFromTheList();
     }
 
     private Vector3 GetMousePosition()

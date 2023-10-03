@@ -8,9 +8,9 @@ public class Selection : MonoBehaviour
     public static GameObject GlobalGameObject;
 
     public Material selectionMaterial;
-    public  Material originalMaterial;
+    public Material originalMaterial;
 
-    private Transform selectedObject;
+    private GameObject selectedObject;
     private RaycastHit rayCastHit;
 
     private bool selectionIsActive;
@@ -19,51 +19,43 @@ public class Selection : MonoBehaviour
     {
         GlobalGameObject = PenTool.listOfDots[0];
     }
+    public void SelectDot(GameObject dotToSelect)
+    {
+        Debug.Log(dotToSelect.GetComponent<MeshRenderer>().material);
+        dotToSelect.GetComponent<MeshRenderer>().material = selectionMaterial;
+
+        GlobalGameObject = dotToSelect.gameObject;
+    }
+    public void UnSelectDot(GameObject dotToSelect)
+    {
+        dotToSelect.GetComponent<MeshRenderer>().material = originalMaterial;
+        GlobalGameObject = null;
+
+    }
     void Update()
     {
+        //Select by clicking
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            //Unselect
-            /*
-            if (selection != null)
-            {
-                selection.GetComponent<MeshRenderer>().material = originalMaterial;
-            }
-            */
             if (Physics.Raycast(ray, out rayCastHit))
             {
                 if (selectionIsActive && rayCastHit.transform.CompareTag("Selectable"))
                 {
-                    selectedObject.GetComponent<MeshRenderer>().material = originalMaterial;
-                    GlobalGameObject = null;
+                    //This is needed so other can be selected
+                    UnSelectDot(selectedObject);
+                    selectedObject = null;
                     selectionIsActive = false;
-                    selectedObject= null;
                 }
                 if (!selectionIsActive && rayCastHit.transform.CompareTag("Selectable"))
                 {
-                    selectedObject = rayCastHit.transform;
-
-                    if (selectedObject.CompareTag("Selectable"))
-                    {
-                        selectedObject.GetComponent<MeshRenderer>().material = selectionMaterial;
-                        selectionIsActive = true;
-                    }
-                    else
-                    {
-                        selectedObject = null;
-                    }
+                    selectedObject = rayCastHit.transform.gameObject;
+                    selectionIsActive = true;
+                    SelectDot(selectedObject.gameObject);
                 }
 
             }
-        }
-        if(selectedObject!= null)
-        {
-            GlobalGameObject = selectedObject.gameObject;  
-        }
-        else
-        {
-
         }
     }
 }

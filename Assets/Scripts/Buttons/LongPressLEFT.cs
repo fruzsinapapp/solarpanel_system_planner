@@ -9,7 +9,6 @@ public class LongPressLEFT : MonoBehaviour
     private void OnMouseDown()
     {
         isClicked = true;
-        Debug.Log("Click");
     }
     private void OnMouseUp()
     {

@@ -22,7 +22,6 @@ public class Selection : MonoBehaviour
     public void SelectDot(GameObject dotToSelect)
     {
         selectionMaterial = Resources.Load<Material>("SelectedMaterial");
-        Debug.Log(dotToSelect.GetComponent<MeshRenderer>().material);
         dotToSelect.GetComponent<MeshRenderer>().material = selectionMaterial;
 
         GlobalGameObject = dotToSelect.gameObject;

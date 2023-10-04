@@ -23,7 +23,10 @@ public class Selection : MonoBehaviour
     {
         selectionMaterial = Resources.Load<Material>("SelectedMaterial");
         dotToSelect.GetComponent<MeshRenderer>().material = selectionMaterial;
-
+        if(GlobalGameObject!= null && GlobalGameObject != dotToSelect)
+        {
+            UnSelectDot(GlobalGameObject);
+        }
         GlobalGameObject = dotToSelect.gameObject;
     }
     public void UnSelectDot(GameObject dotToSelect)

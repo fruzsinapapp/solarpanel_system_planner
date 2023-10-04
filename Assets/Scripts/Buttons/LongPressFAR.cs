@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class LongPressFAR : MonoBehaviour
 {
-    private GameObject objectToMove;
-    private bool isClicked;
-    private void OnMouseDown()
-    {
-        isClicked = true;
-    }
-    private void OnMouseUp()
-    {
-        isClicked = false;
-    }
+    public GameObject objectToMove;
+    private bool isTouched = false;
 
     private void Update()
     {
-        if (isClicked)
+        if (isTouched)
         {
             objectToMove = Selection.GlobalGameObject;
             if (objectToMove != null)
@@ -25,5 +17,13 @@ public class LongPressFAR : MonoBehaviour
                 objectToMove.transform.position += new Vector3(0, 0, 0.01f);
             }
         }
+    }
+    public void TouchStarted()
+    {
+        isTouched = true;
+    }
+    public void TouchEnded()
+    {
+        isTouched = false;
     }
 }

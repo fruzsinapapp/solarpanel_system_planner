@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class LongPressUP : MonoBehaviour
 {
-    private GameObject objectToMove;
-    private bool isClicked;
-    private void OnMouseDown()
-    {
-        isClicked = true;
-    }
-    private void OnMouseUp()
-    {
-        isClicked = false;
-    }
+    public GameObject objectToMove;
+    private bool isTouched = false;
 
     private void Update()
     {
-        if(isClicked)
+        if (isTouched)
         {
             objectToMove = Selection.GlobalGameObject;
-            if (objectToMove != null )
+            if (objectToMove != null)
             {
                 objectToMove.transform.position += new Vector3(0, 0.01f, 0);
             }
-        }  
+        } 
+    }
+    public void TouchStarted()
+    {
+        isTouched = true;
+    }
+    public void TouchEnded()
+    {
+        isTouched = false;
     }
 }

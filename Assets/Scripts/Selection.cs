@@ -35,6 +35,7 @@ public class Selection : MonoBehaviour
     }
     void Update()
     {
+        /*
         //Select by clicking
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
@@ -56,5 +57,6 @@ public class Selection : MonoBehaviour
                 }
             }
         }
+        */
     }
 }

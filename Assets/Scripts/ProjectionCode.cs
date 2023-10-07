@@ -6,15 +6,7 @@ public class ProjectionCode : MonoBehaviour
 {
     public void ProjectionCodeImpl(Vector3 dotToBeProjected)
     {
-        /*
-        Vector3[] rectangleCorners = new Vector3[]
-        {
-            new Vector3(1,1,1),
-            new Vector3(-1,1,1),
-            new Vector3(-1,-1,1),
-            new Vector3(1,-1,1),
-        };
-        */
+
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
         //Vector2[] projectedCorners = new Vector2[rectangleCorners.Length];
@@ -40,5 +32,14 @@ public class ProjectionCode : MonoBehaviour
         Vector2 projectedPoint2D = new Vector2(projectedPoint3D.x, projectedPoint3D.y);
 
         return projectedPoint2D;
+    }
+
+    public Vector2 ProjectionForPython(Vector3 dotToBeProjected)
+    {
+        Vector3 projectionDirection = new Vector3(0, 0, 1);
+        Vector2 projectedCorner = new Vector2();
+
+        dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
+        return dotToBeProjected;
     }
 }

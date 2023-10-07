@@ -9,15 +9,27 @@ public class LoadFromPython : MonoBehaviour
 {
     public void LoadFromPythonScript()
     {
+        GetPositionsButton getPositionButton  = new GetPositionsButton();
+        List<Vector2> dotPositions = getPositionButton.GetPositionsForPython();
         ProcessStartInfo psi = new ProcessStartInfo
         {
             FileName = @"C:\\Python311\\python.exe",
-            Arguments = @"C:\\Users\\fruzs\\Code\\Szakdolgozat\\knapsack-packing\\KnapsackPacking\\problem_experiments.py test",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
+
+        string arguments = @"C:\\Users\\fruzs\\Code\\Szakdolgozat\\knapsack-packing\\KnapsackPacking\\problem_experiments.py";
+        
+        foreach(var dot in dotPositions)
+        {
+            arguments += " ";
+            arguments += dot.x;
+            arguments += " ";
+            arguments += dot.y;
+        }
+        psi.Arguments = arguments;
         try
         {
             using (Process process = new Process())
@@ -33,8 +45,7 @@ public class LoadFromPython : MonoBehaviour
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error: " + e.Message);
+            UnityEngine.Debug.Log("Error: " + e.Message);
         }
-
     }
 }

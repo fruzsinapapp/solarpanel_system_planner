@@ -9419,6 +9419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c455d13e5e1490c4eb8e5dd01295ceb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelPrefab: {fileID: 3386973561279125055, guid: 38b119612c1985e439cef0125b10001a, type: 3}
 --- !u!1 &1638416818 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2369100967195828323, guid: a10f201601c9847448dad4fd634147fe, type: 3}

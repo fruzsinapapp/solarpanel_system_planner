@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class LoadFromPython : MonoBehaviour
 {
+    [SerializeField] private GameObject panelPrefab;
     public void LoadFromPythonScript()
     {
         GetPositionsButton getPositionButton  = new GetPositionsButton();
@@ -37,9 +40,9 @@ public class LoadFromPython : MonoBehaviour
                 process.StartInfo = psi;
                 process.Start();
 
-                string output = process.StandardOutput.ReadToEnd();
+                string pythonOutput = process.StandardOutput.ReadToEnd();
                 string errorMessage = process.StandardError.ReadToEnd();
-                UnityEngine.Debug.Log(output);
+                PlaceAccordingToPythonScript(pythonOutput);
                 process.WaitForExit();
             }
         }
@@ -47,5 +50,32 @@ public class LoadFromPython : MonoBehaviour
         {
             UnityEngine.Debug.Log("Error: " + e.Message);
         }
+    }
+    public void PlaceAccordingToPythonScript(string pythonOutput)
+    {
+        UnityEngine.Debug.Log(pythonOutput);
+        string pattern = @"\((-?\d+), (-?\d+)\)";
+        MatchCollection matches = Regex.Matches(pythonOutput, pattern);
+
+        List<float> xCoordinates = new List<float>();
+        List<float> yCoordinates = new List<float>();
+
+        foreach (Match match in matches)
+        {
+            float x = float.Parse(match.Groups[1].Value);
+            float y = float.Parse(match.Groups[2].Value);
+
+            xCoordinates.Add(x);
+            yCoordinates.Add(y);
+            Vector3 panelPosition = new Vector3(x/100, y/100);
+            GameObject panel = Instantiate(panelPrefab, panelPosition, Quaternion.identity);
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            UnityEngine.Debug.Log("X: " + xCoordinates[i]/100 + ", y: " + yCoordinates[i]/100);
+        }
+
+
+        
     }
 }

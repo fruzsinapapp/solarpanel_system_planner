@@ -1,2 +1,4 @@
 numpy
-argparse
+shapely
+scipy
+matplotlib

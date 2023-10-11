@@ -7,6 +7,6 @@ public class PythonRunnerTest : MonoBehaviour
 {
     void Start()
     {
-        PythonRunner.RunFile("Assets/main.py");
+        PythonRunner.RunFile("Assets/problem_experiments.py", "__main__");
     }
 }

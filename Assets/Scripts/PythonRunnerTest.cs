@@ -11,14 +11,25 @@ using System.Text;
 
 public class PythonRunnerTest : MonoBehaviour
 {
-    static async Task TestTask()
+    public void CallableFunction()
     {
+        GetPositionsButton getPositionButton = new GetPositionsButton();
+        List<Vector2> dotPositions = getPositionButton.GetPositionsForPython();
+        TestTask(dotPositions);
+    }
+    public static async Task TestTask(List<Vector2> dotPositions)
+    {
+        List<Vector2> positions = dotPositions;
+        UnityEngine.Debug.Log(positions[0][0] + " " + positions[0][1] + " " + positions[1][0] + " " + positions[1][1]);
         // Replace with your Azure Function URL
         string functionUrl = "https://pappfruzsinathesis.azurewebsites.net/api/first_function";
+        string requestBody2 = @"{
+            ""name"": ""Fruzsi""
+            }";
         string requestBody = "{\"name\": \"Fruzsi\"}";
         using (HttpClient client = new HttpClient())
         {       
-            HttpResponseMessage response = await client.PostAsync(functionUrl, new StringContent(requestBody, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync(functionUrl, new StringContent(requestBody2, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
@@ -32,8 +43,10 @@ public class PythonRunnerTest : MonoBehaviour
             }
         }
     }
+    /*
     void Start()
     {
         TestTask();
     }
+    */
 }

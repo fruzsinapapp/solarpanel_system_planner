@@ -9,6 +9,7 @@ using UnityEngine.Windows;
 
 public class LoadFromPython : MonoBehaviour
 {
+    #region Testing python script (without Azure)
     [SerializeField] private GameObject panelPrefab;
     public void LoadFromPythonScript()
     {
@@ -73,9 +74,7 @@ public class LoadFromPython : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             UnityEngine.Debug.Log("X: " + xCoordinates[i]/100 + ", y: " + yCoordinates[i]/100);
-        }
-
-
-        
+        }   
     }
+    #endregion
 }

@@ -638,7 +638,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: MoveObjectsFar
-  metroPackageVersion: 1.0.6.0
+  metroPackageVersion: 1.0.7.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany

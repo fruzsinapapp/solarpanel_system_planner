@@ -36,7 +36,7 @@ public class PythonRunnerTest : MonoBehaviour
         string calcPos4_x = ((int)(positions[3][0] * 100)).ToString();
         string calcPos4_y = ((int)(positions[3][1] * 100)).ToString();
         UnityEngine.Debug.Log(calcPos1_x + " " + calcPos1_y + " " + calcPos2_x + " " + calcPos2_y + calcPos3_x + " " + calcPos3_y + " " + calcPos4_x + " " + calcPos4_y);
-        // Replace with your Azure Function URL
+
         string functionUrl = "https://pappfruzsinathesis.azurewebsites.net/api/first_function";
         string requestBody = $@"{{
             ""name"": ""Fruzsi"",
@@ -93,10 +93,4 @@ public class PythonRunnerTest : MonoBehaviour
         }
         
     }
-    /*
-    void Start()
-    {
-        TestTask();
-    }
-    */
 }

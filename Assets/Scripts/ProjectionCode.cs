@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class ProjectionCode : MonoBehaviour
 {
+    #region Testing (called from GetPositionsButton.cs)
     public void ProjectionCodeImpl(Vector3 dotToBeProjected)
     {
-
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
-        //Vector2[] projectedCorners = new Vector2[rectangleCorners.Length];
-        Vector2 projectedCorner = new Vector2();
-        //for (int i = 0; i < rectangleCorners.Length; i++)
-        //{
-        dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
-        //}
-        //foreach(var dot in projectedCorners)
-        //{
-            Debug.Log("X: " + dotToBeProjected.x + ", Y: " + dotToBeProjected.y);
-        //}
-    }
+        float originalZPosition = dotToBeProjected.z;
 
+        dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
+        float originalAngle = Vector3.Angle(dotToBeProjected, projectionDirection);
+
+        Debug.Log("X: " + dotToBeProjected.x + ", Y: " + dotToBeProjected.y);
+        Debug.Log("Angle: " + originalAngle);
+    }
+    #endregion
     private Vector2 ProjectionOntoPlane(Vector3 point3D, Vector3 planeNormal)
     {
         planeNormal = Vector3.Normalize(planeNormal);
@@ -37,9 +34,13 @@ public class ProjectionCode : MonoBehaviour
     public Vector2 ProjectionForPython(Vector3 dotToBeProjected)
     {
         Vector3 projectionDirection = new Vector3(0, 0, 1);
-        Vector2 projectedCorner = new Vector2();
+
+        float originalZPosition = dotToBeProjected.z;
 
         dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
+
+        float originalAngle = Vector3.Angle(dotToBeProjected, projectionDirection);
+
         return dotToBeProjected;
     }
 }

@@ -611,9 +611,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1607997430}
-        m_TargetAssemblyTypeName: LoadFromPython, Assembly-CSharp
-        m_MethodName: LoadFromPythonScript
+      - m_Target: {fileID: 1607997431}
+        m_TargetAssemblyTypeName: PythonRunnerTest, Assembly-CSharp
+        m_MethodName: CallableFunction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9383,6 +9383,7 @@ GameObject:
   - component: {fileID: 1607997425}
   - component: {fileID: 1607997424}
   - component: {fileID: 1607997430}
+  - component: {fileID: 1607997431}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -9518,6 +9519,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelPrefab: {fileID: 3386973561279125055, guid: 38b119612c1985e439cef0125b10001a, type: 3}
+--- !u!114 &1607997431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607997421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec24e49f4f015f442b8a99ff8fb31ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1638416818 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2369100967195828323, guid: a10f201601c9847448dad4fd634147fe, type: 3}

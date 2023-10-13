@@ -8,9 +8,15 @@ using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
+using UnityEngine.Windows;
 
 public class PythonRunnerTest : MonoBehaviour
 {
+    [SerializeField] static private GameObject panelPrefab;
+    private void Start()
+    {
+        panelPrefab = Resources.Load<GameObject>("solar");
+    }
     public void CallableFunction()
     {
         GetPositionsButton getPositionButton = new GetPositionsButton();
@@ -53,12 +59,39 @@ public class PythonRunnerTest : MonoBehaviour
                 // Handle a successful response
                 string responseContent = await response.Content.ReadAsStringAsync();
                 UnityEngine.Debug.Log("Azure Function response: " + responseContent);
+                ProcessResponse(responseContent);
             }
             else
             {
                 UnityEngine.Debug.Log("Error: " + response.StatusCode);
             }
         }
+    }
+    public static void ProcessResponse(string response)
+    {
+
+        string[] parts = response.Split(' ');
+
+        List<int> numbers = new List<int>();
+
+        foreach (string part in parts)
+        {
+            if (int.TryParse(part, out int number))
+            {
+                numbers.Add(number);
+            }
+        }
+        for (int i = 0; i < numbers.Count; i += 2)
+        {
+            if (i + 1 < numbers.Count)
+            {
+                int x = numbers[i] / 100;
+                int y = numbers[i + 1] / 100;
+                Vector3 panelPosition = new Vector3(x, y);
+                GameObject panel = Instantiate(panelPrefab, panelPosition, Quaternion.identity);
+            }
+        }
+        
     }
     /*
     void Start()

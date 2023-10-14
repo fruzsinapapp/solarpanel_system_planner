@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class ProjectionCode : MonoBehaviour
 {
+    public static float originalZPosition;
+    public static float originalAngleTwoDots;
+
     #region Testing (called from GetPositionsButton.cs)
     public void ProjectionCodeImpl(Vector3 dotToBeProjected)
     {
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
-        float originalZPosition = dotToBeProjected.z;
+        float zPosition = dotToBeProjected.z;
 
         dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
         float originalAngle = Vector3.Angle(dotToBeProjected, projectionDirection);
@@ -33,13 +36,13 @@ public class ProjectionCode : MonoBehaviour
 
     public Vector2 ProjectionForPython(Vector3 dotToBeProjected)
     {
+        Vector3 vectorBetweenDots = PenTool.listOfDots[0].transform.position - PenTool.listOfDots[1].transform.position;
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
-        float originalZPosition = dotToBeProjected.z;
+        originalAngleTwoDots = Vector3.Angle(vectorBetweenDots, projectionDirection);
+        originalZPosition = dotToBeProjected.z;
 
         dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
-
-        float originalAngle = Vector3.Angle(dotToBeProjected, projectionDirection);
 
         return dotToBeProjected;
     }

@@ -81,14 +81,29 @@ public class PythonRunnerTest : MonoBehaviour
                 numbers.Add(number);
             }
         }
+        int valami = 0;
         for (int i = 0; i < numbers.Count; i += 2)
         {
-            if (i + 1 < numbers.Count)
+            if (i + 1 < numbers.Count+1)
             {
-                int x = numbers[i] / 100;
-                int y = numbers[i + 1] / 100;
-                Vector3 panelPosition = new Vector3(x, y);
-                GameObject panel = Instantiate(panelPrefab, panelPosition, Quaternion.identity);
+                float x = numbers[i] / 100f;
+                float y = numbers[i + 1] / 100f;
+                if (valami == 1)
+                {
+                    x += 1f;
+                }
+
+                float oldZ = ProjectionCode.originalZPosition;
+                float oldAngle = ProjectionCode.originalAngleTwoDots;
+
+                UnityEngine.Debug.Log("Old Z: " + oldZ);
+                UnityEngine.Debug.Log("Old angle: " + oldAngle);
+
+                Quaternion rotation = Quaternion.Euler(oldAngle, 0f, 0f);
+
+                Vector3 panelPosition = new Vector3(x, y, oldZ);
+                GameObject panel = Instantiate(panelPrefab, panelPosition, rotation);
+                valami++;
             }
         }
         

@@ -11,6 +11,7 @@ using Microsoft.MixedReality.Toolkit;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEditor;
+using TMPro;
 
 public class PenTool : MonoBehaviour
 {
@@ -55,12 +56,38 @@ public class PenTool : MonoBehaviour
         Selection s = new Selection();
         GameObject dotWithText = Instantiate(dotWithTextPrefab, GetMousePosition(), Quaternion.identity, dotParent);
         Transform dot = dotWithText.transform.Find("Dot");
+
+        Transform coordinatesText = dotWithText.transform.Find("DotCoordinatesText");
+        TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
+        myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
         dot.tag = "Selectable";
         listOfDotsWithText.Add(dotWithText);
         currentLine.AddPoint(dot.transform);
         s.SelectDotFromTheList();
     }
 
+    private float updateInterval = 0.1f;
+    private float timeSinceLastUpdate = 0;
+
+    void Update()
+    {
+        timeSinceLastUpdate += Time.deltaTime;
+
+        if (timeSinceLastUpdate >= updateInterval)
+        {
+            if (listOfDotsWithText != null)
+            {
+                foreach (var dotWithText in listOfDotsWithText)
+                {
+                    Transform coordinatesText = dotWithText.transform.Find("DotCoordinatesText");
+                    TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
+                    Transform dot = dotWithText.transform.Find("Dot");
+                    myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
+                }
+            }
+            timeSinceLastUpdate = 0;
+        }
+    }
     private Vector3 GetMousePosition()
     {
         /*

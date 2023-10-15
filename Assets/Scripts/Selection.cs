@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,18 +17,19 @@ public class Selection : MonoBehaviour
     private bool selectionIsActive;
     public void SelectDotFromTheList()
     {
-        SelectDot(PenTool.listOfDots[0].gameObject);
+        SelectDot(PenTool.listOfDotsWithText[0].gameObject);
         //GlobalGameObject = PenTool.listOfDots[0];
     }
-    public void SelectDot(GameObject dotToSelect)
+    public void SelectDot(GameObject dotWithTextToSelect)
     {
+        Transform dotToSelect = dotWithTextToSelect.transform.Find("Dot");
         selectionMaterial = Resources.Load<Material>("SelectedMaterial");
         dotToSelect.GetComponent<MeshRenderer>().material = selectionMaterial;
         if(GlobalGameObject!= null && GlobalGameObject != dotToSelect)
         {
             UnSelectDot(GlobalGameObject);
         }
-        GlobalGameObject = dotToSelect.gameObject;
+        GlobalGameObject = dotWithTextToSelect.gameObject;
     }
     public void UnSelectDot(GameObject dotToSelect)
     {

@@ -15,14 +15,14 @@ using UnityEditor;
 public class PenTool : MonoBehaviour
 {
     [Header("Dots")]
-    [SerializeField] private GameObject dotPrefab;
+    [SerializeField] private GameObject dotWithTextPrefab;
     [SerializeField] Transform dotParent;
 
     [Header("Lines")]
     [SerializeField] private GameObject linePrefab;
     [SerializeField] Transform lineParent;
 
-    public static List<GameObject> listOfDots = new List<GameObject>();
+    public static List<GameObject> listOfDotsWithText = new List<GameObject>();
 
     protected class PointerData
     {
@@ -53,19 +53,25 @@ public class PenTool : MonoBehaviour
             currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
 
         Selection s = new Selection();
-        GameObject dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent);
+        GameObject dotWithText = Instantiate(dotWithTextPrefab, GetMousePosition(), Quaternion.identity, dotParent);
+        Transform dot = dotWithText.transform.Find("Dot");
         dot.tag = "Selectable";
-        listOfDots.Add(dot);
+        listOfDotsWithText.Add(dotWithText);
         currentLine.AddPoint(dot.transform);
         s.SelectDotFromTheList();
     }
 
     private Vector3 GetMousePosition()
     {
+        /*
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldMousePosition.x += 2;
         worldMousePosition.z += 5;
 
         return worldMousePosition;
+        */
+        Vector3 zeroPosition = new Vector3 { x = 0, y = 0, z = 2 };
+
+        return zeroPosition;
     }
 }

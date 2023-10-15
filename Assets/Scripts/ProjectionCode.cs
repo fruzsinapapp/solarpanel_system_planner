@@ -36,7 +36,9 @@ public class ProjectionCode : MonoBehaviour
 
     public Vector2 ProjectionForPython(Vector3 dotToBeProjected)
     {
-        Vector3 vectorBetweenDots = PenTool.listOfDots[0].transform.position - PenTool.listOfDots[1].transform.position;
+        GameObject dot1 = PenTool.listOfDotsWithText[0].gameObject.GetComponent<GameObject>();
+        GameObject dot2 = PenTool.listOfDotsWithText[1].gameObject.GetComponent<GameObject>();
+        Vector3 vectorBetweenDots = dot1.transform.position - dot2.transform.position;
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
         originalAngleTwoDots = Vector3.Angle(vectorBetweenDots, projectionDirection);

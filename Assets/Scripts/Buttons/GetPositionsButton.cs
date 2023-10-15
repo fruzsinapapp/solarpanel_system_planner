@@ -11,7 +11,11 @@ public class GetPositionsButton : MonoBehaviour
     public TextMeshPro myTextMeshPro;
     public void GetPositions()
     {
-        Vector3 vectorBetweenDots = PenTool.listOfDots[0].transform.position - PenTool.listOfDots[1].transform.position;
+        GameObject dot1 = PenTool.listOfDotsWithText[0].gameObject.GetComponent<GameObject>();
+        GameObject dot2 = PenTool.listOfDotsWithText[1].gameObject.GetComponent<GameObject>();
+        Vector3 vectorBetweenDots = dot1.transform.position - dot2.transform.position;
+
+        //Vector3 vectorBetweenDots = PenTool.listOfDots[0].transform.position - PenTool.listOfDots[1].transform.position;
         Vector3 projectionDirection = new Vector3(0, 0, 1);
         float angle = Vector3.Angle(vectorBetweenDots, projectionDirection);
         Debug.Log("Angle: " + angle);
@@ -35,8 +39,9 @@ public class GetPositionsButton : MonoBehaviour
     public List<Vector2> GetPositionsForPython()
     {
         List<Vector2> listOfProjectedDots = new List<Vector2>();
-        foreach (var dot in PenTool.listOfDots)
+        foreach (var dotWithText in PenTool.listOfDotsWithText)
         {
+            GameObject dot = dotWithText.gameObject.GetComponent<GameObject>();
             listOfProjectedDots.Add(pc.ProjectionForPython(dot.transform.position));
         }
         return listOfProjectedDots;

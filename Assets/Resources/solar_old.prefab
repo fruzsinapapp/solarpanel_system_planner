@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1433545165432275744}
   - component: {fileID: 3747011324547250154}
   m_Layer: 0
-  m_Name: solar
+  m_Name: solar_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3386973561279125055}
-  m_LocalRotation: {x: 0.7071068, y: -0.7071068, z: 0, w: 0}
-  m_LocalPosition: {x: -0.4, y: -0.05, z: 0}
-  m_LocalScale: {x: 1.18, y: 1.11, z: 1}
+  m_LocalRotation: {x: -0.38268346, y: 0, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: 0.00000046895656, y: 0.12206021, z: 0.35525173}
+  m_LocalScale: {x: 1, y: 0.9999998, z: 0.9999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1433545165432275744
 MeshFilter:
   m_ObjectHideFlags: 0

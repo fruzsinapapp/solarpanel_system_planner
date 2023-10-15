@@ -43,6 +43,7 @@ public class ProjectionCode : MonoBehaviour
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
         originalAngleTwoDots = Vector3.Angle(vectorBetweenDots, projectionDirection);
+        UnityEngine.Debug.Log("Angle: " + originalAngleTwoDots);
         originalZPosition = dotToBeProjected.z;
 
         dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);

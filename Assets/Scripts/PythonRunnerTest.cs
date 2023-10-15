@@ -90,18 +90,19 @@ public class PythonRunnerTest : MonoBehaviour
                 float y = numbers[i + 1] / 100f;
                 if (valami == 1)
                 {
-                    x += 1f;
+                    x += 0.5f;
                 }
 
                 float oldZ = ProjectionCode.originalZPosition;
                 float oldAngle = ProjectionCode.originalAngleTwoDots;
 
-                UnityEngine.Debug.Log("Old Z: " + oldZ);
+                UnityEngine.Debug.Log("Old Z: " + ProjectionCode.originalAngleTwoDots);
                 UnityEngine.Debug.Log("Old angle: " + oldAngle);
+                UnityEngine.Debug.Log("Old angle 2: " + ProjectionCode.originalAngleTwoDots);
 
-                Quaternion rotation = Quaternion.Euler(oldAngle, 0f, 0f);
+                Quaternion rotation = Quaternion.Euler(oldAngle - 180f, 0f, 0f + 90f);
 
-                Vector3 panelPosition = new Vector3(x, y, oldZ);
+                Vector3 panelPosition = new Vector3(x, y, oldZ - 1f);
                 GameObject panel = Instantiate(panelPrefab, panelPosition, rotation);
                 valami++;
             }

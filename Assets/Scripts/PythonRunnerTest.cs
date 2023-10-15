@@ -102,7 +102,7 @@ public class PythonRunnerTest : MonoBehaviour
 
                 Quaternion rotation = Quaternion.Euler(oldAngle - 180f, 0f, 0f + 90f);
 
-                Vector3 panelPosition = new Vector3(x, y, oldZ - 1f);
+                Vector3 panelPosition = new Vector3(x, y, oldZ-0.5f);
                 GameObject panel = Instantiate(panelPrefab, panelPosition, rotation);
                 valami++;
             }

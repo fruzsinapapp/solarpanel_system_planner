@@ -90,7 +90,7 @@ public class PythonRunnerTest : MonoBehaviour
                 float y = numbers[i + 1] / 100f;
                 if (valami == 1)
                 {
-                    x += 0.5f;
+                    x += 0.2f;
                 }
 
                 float oldZ = ProjectionCode.originalZPosition;

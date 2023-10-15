@@ -97,7 +97,7 @@ public class PenTool : MonoBehaviour
 
         return worldMousePosition;
         */
-        Vector3 zeroPosition = new Vector3 { x = 0, y = 0, z = 2 };
+        Vector3 zeroPosition = new Vector3 { x = 0, y = 0, z = 1 };
 
         return zeroPosition;
     }

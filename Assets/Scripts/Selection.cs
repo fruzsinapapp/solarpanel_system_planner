@@ -31,6 +31,17 @@ public class Selection : MonoBehaviour
         }
         GlobalGameObject = dotWithTextToSelect.gameObject;
     }
+    public void SelectDotAfterTheFirst(GameObject dotWithTextToSelect)
+    {
+        Transform dotToSelect = dotWithTextToSelect.transform.Find("Dot");
+        selectionMaterial = Resources.Load<Material>("SelectedMaterial");
+        dotToSelect.GetComponent<MeshRenderer>().material = selectionMaterial;
+        if (GlobalGameObject != null && GlobalGameObject != dotWithTextToSelect)
+        {
+            UnSelectDot(GlobalGameObject);
+        }
+        GlobalGameObject = dotWithTextToSelect.gameObject;
+    }
     public void UnSelectDot(GameObject dotWithTextToSelect)
     {
         Transform dotToSelect = dotWithTextToSelect.transform.Find("Dot");

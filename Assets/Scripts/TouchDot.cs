@@ -12,8 +12,7 @@ public class TouchDot : MonoBehaviour
     }
     public void TouchDotWithHand()
     {
-
         Selection s = new Selection();
-        s.SelectDot(myGameObject);
+        s.SelectDotAfterTheFirst(myGameObject);
     }
 }

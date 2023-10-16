@@ -24,6 +24,7 @@ public class PythonRunnerTest : MonoBehaviour
         List<Vector2> dotPositions = getPositionButton.GetPositionsForPython();
         TestTask(dotPositions);
     }
+    
     public static async Task TestTask(List<Vector2> dotPositions)
     {
         List<Vector2> positions = dotPositions;
@@ -68,6 +69,7 @@ public class PythonRunnerTest : MonoBehaviour
             }
         }
     }
+    
     static List<float> ExtractNumbers(string input)
     {
         List<float> numbers = new List<float>();
@@ -120,7 +122,7 @@ public class PythonRunnerTest : MonoBehaviour
                     oldAngle = 90 - oldAngle;
                 Quaternion rotation = Quaternion.Euler(oldAngle, 0f, 0f);
 
-                Vector3 panelPosition = new Vector3(x, y, oldZ-0.3f);
+                Vector3 panelPosition = new Vector3(x, y, oldZ-0.1f);
                 GameObject panel = Instantiate(panelPrefab, panelPosition, rotation);
             }
         }

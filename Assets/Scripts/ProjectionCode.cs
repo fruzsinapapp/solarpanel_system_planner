@@ -39,7 +39,12 @@ public class ProjectionCode : MonoBehaviour
 
         Transform dot1 = PenTool.listOfDotsWithText[0].transform.Find("Dot");
         Transform dot2 = PenTool.listOfDotsWithText[1].transform.Find("Dot");
-        Vector3 vectorBetweenDots = dot1.transform.position - dot2.transform.position;
+
+        Vector3 newCoordinates1 = PenTool.zeroMarkerScript.UseRealCoordinates(dot1);
+        Vector3 newCoordinates2 = PenTool.zeroMarkerScript.UseRealCoordinates(dot2);
+
+
+        Vector3 vectorBetweenDots = newCoordinates1 - newCoordinates2;
         Vector3 projectionDirection = new Vector3(0, 0, 1);
 
         originalAngleTwoDots = Vector3.Angle(vectorBetweenDots, projectionDirection);

@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class ZeroMarkerScript : MonoBehaviour
 {
-    [SerializeField] private GameObject zeroMarkerDot;
+    [SerializeField] private GameObject zeroMarkerDotPrefab;
+    [SerializeField] Transform zeroMarkerParent;
+
+    public static GameObject zeroMarkerAssigned;
 
     void Start()
     {
-        Vector3 startPosition = new Vector3(0.5f, 0f, 1f);
-        zeroMarkerDot.transform.position = startPosition;
-        Transform dot = zeroMarkerDot.transform.Find("Dot");
+        //zeroMarkerDot = Resources.Load<GameObject>("ZeroMarker");
+        GameObject zeroMarkerDotInst = Instantiate(zeroMarkerDotPrefab, Vector3.zero, Quaternion.identity, zeroMarkerParent);
+        
+        Transform dot = zeroMarkerDotInst.transform.Find("ZeroDot");
 
-        Transform coordinatesText = zeroMarkerDot.transform.Find("DotCoordinatesText");
+        Transform coordinatesText = zeroMarkerDotInst.transform.Find("DotCoordinatesText");
         TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
+
+
+
+
         myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
-        dot.tag = "Selectable";
+        zeroMarkerAssigned = zeroMarkerDotInst;
     }
 
     private float updateInterval = 0.1f;
@@ -28,12 +36,25 @@ public class ZeroMarkerScript : MonoBehaviour
 
         if (timeSinceLastUpdate >= updateInterval)
         {
-            Transform coordinatesText = zeroMarkerDot.transform.Find("DotCoordinatesText");
-            TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
-            Transform dot = zeroMarkerDot.transform.Find("Dot");
-            myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
+            if(zeroMarkerAssigned != null)
+            {
+                Transform coordinatesText = zeroMarkerAssigned.transform.Find("DotCoordinatesText");
+                TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
+                Transform dot = zeroMarkerAssigned.transform.Find("ZeroDot");
+                myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
+
+            }
 
             timeSinceLastUpdate = 0;
         }
+    }
+
+    public Vector3 UseRealCoordinates(Transform dotWithOldOrigo)
+    {
+        Transform dot = zeroMarkerAssigned.transform.Find("ZeroDot");
+
+        Vector3 offset = dotWithOldOrigo.position - dot.transform.position;
+
+        return offset;
     }
 }

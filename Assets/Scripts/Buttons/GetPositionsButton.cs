@@ -45,7 +45,8 @@ public class GetPositionsButton : MonoBehaviour
         foreach (var dotWithText in PenTool.listOfDotsWithText)
         {
             Transform dot = dotWithText.transform.Find("Dot");
-            listOfProjectedDots.Add(pc.ProjectionForPython(dot.transform.position));
+            Vector3 newCoordinates = PenTool.zeroMarkerScript.UseRealCoordinates(dot);
+            listOfProjectedDots.Add(pc.ProjectionForPython(newCoordinates));
         }
         return listOfProjectedDots;
     }

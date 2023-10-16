@@ -15,6 +15,7 @@ using TMPro;
 
 public class PenTool : MonoBehaviour
 {
+    public static ZeroMarkerScript zeroMarkerScript;
     [Header("Dots")]
     [SerializeField] private GameObject dotWithTextPrefab;
     [SerializeField] Transform dotParent;
@@ -25,6 +26,10 @@ public class PenTool : MonoBehaviour
 
     public static List<GameObject> listOfDotsWithText = new List<GameObject>();
 
+    private void Start()
+    {
+        zeroMarkerScript = new ZeroMarkerScript();
+    }
     protected class PointerData
     {
         public readonly IMixedRealityPointer pointer;
@@ -59,7 +64,11 @@ public class PenTool : MonoBehaviour
 
         Transform coordinatesText = dotWithText.transform.Find("DotCoordinatesText");
         TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
-        myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
+
+        //write coordinates with new origo
+        Vector3 newCoordinates = zeroMarkerScript.UseRealCoordinates(dot);
+        UnityEngine.Debug.Log("New coordinates: " + newCoordinates*100f);
+        myTextMeshPro.text = "x: " + (newCoordinates.x * 100f).ToString("N2") + "\ny: " + (newCoordinates.y * 100f).ToString("N2") + "\nz: " + (newCoordinates.z * 100f).ToString("N2");
         dot.tag = "Selectable";
         listOfDotsWithText.Add(dotWithText);
         currentLine.AddPoint(dot.transform);
@@ -82,7 +91,8 @@ public class PenTool : MonoBehaviour
                     Transform coordinatesText = dotWithText.transform.Find("DotCoordinatesText");
                     TextMeshPro myTextMeshPro = coordinatesText.GetComponent<TextMeshPro>();
                     Transform dot = dotWithText.transform.Find("Dot");
-                    myTextMeshPro.text = "x: " + (dot.transform.position.x * 100f).ToString("N2") + "\ny: " + (dot.transform.position.y * 100f).ToString("N2") + "\nz: " + (dot.transform.position.z * 100f).ToString("N2");
+                    Vector3 newCoordinates = zeroMarkerScript.UseRealCoordinates(dot);
+                    myTextMeshPro.text = "x: " + (newCoordinates.x * 100f).ToString("N2") + "\ny: " + (newCoordinates.y * 100f).ToString("N2") + "\nz: " + (newCoordinates.z * 100f).ToString("N2");
                 }
             }
             timeSinceLastUpdate = 0;

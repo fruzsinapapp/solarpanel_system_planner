@@ -9,13 +9,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
 using UnityEngine.Windows;
+using System.Text.RegularExpressions;
 
 public class PythonRunnerTest : MonoBehaviour
 {
     [SerializeField] static private GameObject panelPrefab;
     private void Start()
     {
-        panelPrefab = Resources.Load<GameObject>("solar");
+        panelPrefab = Resources.Load<GameObject>("CustomSolarPanel");
     }
     public void CallableFunction()
     {
@@ -67,31 +68,44 @@ public class PythonRunnerTest : MonoBehaviour
             }
         }
     }
-    public static void ProcessResponse(string response)
+    static List<float> ExtractNumbers(string input)
     {
+        List<float> numbers = new List<float>();
+        string pattern = @"[0-9.]+";
 
-        string[] parts = response.Split(' ');
+        MatchCollection matches = Regex.Matches(input, pattern);
 
-        List<int> numbers = new List<int>();
-
-        foreach (string part in parts)
+        foreach (Match match in matches)
         {
-            if (int.TryParse(part, out int number))
+            if (float.TryParse(match.Value, out float number))
             {
                 numbers.Add(number);
             }
         }
-        int valami = 0;
-        for (int i = 0; i < numbers.Count; i += 2)
+
+        return numbers;
+    }
+
+    public static void ProcessResponse(string response)
+    {
+        UnityEngine.Debug.Log("RESPONSE: " + response);
+
+        List<float> numbers2 = ExtractNumbers(response);
+
+        foreach (double number in numbers2)
         {
-            if (i + 1 < numbers.Count+1)
+            UnityEngine.Debug.Log(number);
+        }
+
+        for (int i = 0; i < numbers2.Count; i += 2)
+        {
+            if (i + 1 < numbers2.Count+1)
             {
-                float x = numbers[i] / 100f;
-                float y = numbers[i + 1] / 100f;
-                if (valami == 1)
-                {
-                    x += 0.2f;
-                }
+                float x = numbers2[i] / 100f;
+                float y = numbers2[i + 1] / 100f;
+
+                x += 0.2f;
+
 
                 float oldZ = ProjectionCode.originalZPosition;
                 float oldAngle = ProjectionCode.originalAngleTwoDots;
@@ -100,11 +114,14 @@ public class PythonRunnerTest : MonoBehaviour
                 UnityEngine.Debug.Log("Old angle: " + oldAngle);
                 UnityEngine.Debug.Log("Old angle 2: " + ProjectionCode.originalAngleTwoDots);
 
-                Quaternion rotation = Quaternion.Euler(oldAngle - 180f, 0f, 0f + 90f);
+                if (oldAngle > 90)
+                    oldAngle -= 90;
+                else
+                    oldAngle = 90 - oldAngle;
+                Quaternion rotation = Quaternion.Euler(oldAngle, 0f, 0f);
 
-                Vector3 panelPosition = new Vector3(x, y, oldZ-0.5f);
+                Vector3 panelPosition = new Vector3(x, y, oldZ-0.3f);
                 GameObject panel = Instantiate(panelPrefab, panelPosition, rotation);
-                valami++;
             }
         }
         

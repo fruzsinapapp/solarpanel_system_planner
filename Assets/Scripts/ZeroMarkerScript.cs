@@ -57,4 +57,13 @@ public class ZeroMarkerScript : MonoBehaviour
 
         return offset;
     }
+
+    public Vector3 UseRealCoordinatesVector(Vector3 oldVector)
+    {
+        Transform dot = zeroMarkerAssigned.transform.Find("ZeroDot");
+
+        Vector3 offset = oldVector + dot.transform.position;
+
+        return offset;
+    }
 }

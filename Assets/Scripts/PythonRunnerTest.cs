@@ -122,9 +122,12 @@ public class PythonRunnerTest : MonoBehaviour
                     oldAngle = 90 - oldAngle;
                 Quaternion rotation = Quaternion.Euler(oldAngle, 0f, 0f);
 
-                Vector3 panelPosition = new Vector3(x, y, 0);
+                Vector3 panelPosition = new Vector3(x, y);
                 Vector3 newCoordinates = PenTool.zeroMarkerScript.UseRealCoordinatesVector(panelPosition);
-                newCoordinates.z = oldZ + 0.2f;
+
+                newCoordinates.z = oldZ-(1.2f);
+
+                UnityEngine.Debug.Log("new z: " + newCoordinates.z);
                 GameObject panel = Instantiate(panelPrefab, newCoordinates, rotation);
             }
         }

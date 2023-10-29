@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using TMPro; // Import the TMPro namespace if it's not already imported
+using Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes;
+
 public class GetPositionsButton : MonoBehaviour
 {
     ProjectionCode pc = new ProjectionCode();
@@ -45,8 +47,9 @@ public class GetPositionsButton : MonoBehaviour
         foreach (var dotWithText in PenTool.listOfDotsWithText)
         {
             Transform dot = dotWithText.transform.Find("Dot");
+            float originalZ = dot.transform.position.z;
             Vector3 newCoordinates = PenTool.zeroMarkerScript.UseRealCoordinates(dot);
-            listOfProjectedDots.Add(pc.ProjectionForPython(newCoordinates));
+            listOfProjectedDots.Add(pc.ProjectionForPython(newCoordinates, originalZ));
         }
         return listOfProjectedDots;
     }

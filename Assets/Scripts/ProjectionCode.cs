@@ -34,7 +34,7 @@ public class ProjectionCode : MonoBehaviour
         return projectedPoint2D;
     }
 
-    public Vector2 ProjectionForPython(Vector3 dotToBeProjected)
+    public Vector2 ProjectionForPython(Vector3 dotToBeProjected, float originalZ)
     {
 
         Transform dot1 = PenTool.listOfDotsWithText[0].transform.Find("Dot");
@@ -49,7 +49,7 @@ public class ProjectionCode : MonoBehaviour
 
         originalAngleTwoDots = Vector3.Angle(vectorBetweenDots, projectionDirection);
         UnityEngine.Debug.Log("Angle: " + originalAngleTwoDots);
-        originalZPosition = dotToBeProjected.z;
+        originalZPosition = originalZ;
 
         dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
 

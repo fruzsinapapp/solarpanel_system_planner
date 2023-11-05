@@ -42,14 +42,14 @@ public class PythonRunnerTest : MonoBehaviour
         string functionUrl = "https://pappfruzsinathesis.azurewebsites.net/api/first_function";
         string requestBody = $@"{{
             ""name"": ""Fruzsi"",
-            ""dot_1_x"": ""{calcPos1_x}"",
-            ""dot_1_y"": ""{calcPos1_y}"",
-            ""dot_2_x"": ""{calcPos2_x}"",
-            ""dot_2_y"": ""{calcPos2_y}"",
-            ""dot_3_x"": ""{calcPos3_x}"",
-            ""dot_3_y"": ""{calcPos3_y}"",
-            ""dot_4_x"": ""{calcPos4_x}"",
-            ""dot_4_y"": ""{calcPos4_y}""
+            ""calcPos1_x"": ""{calcPos1_x}"",
+            ""calcPos1_y"": ""{calcPos1_y}"",
+            ""calcPos2_x"": ""{calcPos2_x}"",
+            ""calcPos2_y"": ""{calcPos2_y}"",
+            ""calcPos3_x"": ""{calcPos3_x}"",
+            ""calcPos3_y"": ""{calcPos3_y}"",
+            ""calcPos4_x"": ""{calcPos4_x}"",
+            ""calcPos4_y"": ""{calcPos4_y}""
             }}";
         UnityEngine.Debug.Log(requestBody);
         using (HttpClient client = new HttpClient())

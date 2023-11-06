@@ -52,7 +52,7 @@ public class ProjectionCode : MonoBehaviour
         originalZPosition = originalZ;
 
         dotToBeProjected = ProjectionOntoPlane(dotToBeProjected, projectionDirection);
-
+        Debug.Log("[NEW] projected position: " + dotToBeProjected);
         return dotToBeProjected;
     }
 }

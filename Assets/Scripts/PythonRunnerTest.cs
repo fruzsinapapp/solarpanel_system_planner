@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Text;
 using UnityEngine.Windows;
 using System.Text.RegularExpressions;
+using UnityEngine.UIElements;
 
 public class PythonRunnerTest : MonoBehaviour
 {
@@ -21,37 +22,59 @@ public class PythonRunnerTest : MonoBehaviour
     public void CallableFunction()
     {
         GetPositionsButton getPositionButton = new GetPositionsButton();
-        List<Vector2> dotPositions = getPositionButton.GetPositionsForPython();
-        TestTask(dotPositions);
+        List<Vector2> coordinatesToSendToAzure = getPositionButton.DefineCoordinatesToSendToAzure();
+        SendCoordinatesToAzure(coordinatesToSendToAzure);
     }
     
-    public static async Task TestTask(List<Vector2> dotPositions)
+    public static string GenerateRequestBody(List<Vector2> positions)
     {
-        List<Vector2> positions = dotPositions;
+        List<string> calcStrings = new List<string>();
+        for (int i = 0; i < positions.Count; i++)
+        {
+            string calcPos_x = ((int)(positions[i][0] * 100)).ToString();
+            string calcPos_y = ((int)(positions[i][1] * 100)).ToString();
+            string calcString = $"calcPos{i + 1}_x = {calcPos_x}, calcPos{i + 1}_y = {calcPos_y}";
+            calcStrings.Add(calcString);
+        }
+
+        Dictionary<string, string> requestBodyValues = new Dictionary<string, string>();
+
+        foreach (string calcString in calcStrings)
+        {
+            string[] pairs = calcString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string pair in pairs)
+            {
+                string[] keyValue = pair.Trim().Split('=');
+                if (keyValue.Length == 2)
+                {
+                    string key = keyValue[0].Trim();
+                    string value = keyValue[1].Trim();
+                    requestBodyValues[key] = value;
+                }
+            }
+        }
+
+        List<string> requestBodyItems = new List<string>();
+
+        foreach (var kvp in requestBodyValues)
+        {
+            requestBodyItems.Add($"\"{kvp.Key}\": \"{kvp.Value}\"");
+        }
+
+        string requestBody = "{\r\n" + string.Join(",\r\n", requestBodyItems) + "\r\n}";
+        requestBody = "{\r\n\"name\": \"Fruzsi\",\r\n" + requestBody.Substring(1);
+
+        return requestBody;
+    }
+    public static async Task SendCoordinatesToAzure(List<Vector2> coordinatesToSendToAzure)
+    {
+        List<Vector2> positions = coordinatesToSendToAzure;
         UnityEngine.Debug.Log(positions[0][0] + " " + positions[0][1] + " " + positions[1][0] + " " + positions[1][1]);
-        string calcPos1_x = ((int)(positions[0][0] * 100)).ToString();
-        string calcPos1_y = ((int)(positions[0][1] * 100)).ToString();
-        string calcPos2_x = ((int)(positions[1][0] * 100)).ToString();
-        string calcPos2_y = ((int)(positions[1][1] * 100)).ToString();
-        string calcPos3_x = ((int)(positions[2][0] * 100)).ToString();
-        string calcPos3_y = ((int)(positions[2][1] * 100)).ToString();
-        string calcPos4_x = ((int)(positions[3][0] * 100)).ToString();
-        string calcPos4_y = ((int)(positions[3][1] * 100)).ToString();
-        UnityEngine.Debug.Log(calcPos1_x + " " + calcPos1_y + " " + calcPos2_x + " " + calcPos2_y + calcPos3_x + " " + calcPos3_y + " " + calcPos4_x + " " + calcPos4_y);
 
         string functionUrl = "https://pappfruzsinathesis.azurewebsites.net/api/first_function";
-        string requestBody = $@"{{
-            ""name"": ""Fruzsi"",
-            ""calcPos1_x"": ""{calcPos1_x}"",
-            ""calcPos1_y"": ""{calcPos1_y}"",
-            ""calcPos2_x"": ""{calcPos2_x}"",
-            ""calcPos2_y"": ""{calcPos2_y}"",
-            ""calcPos3_x"": ""{calcPos3_x}"",
-            ""calcPos3_y"": ""{calcPos3_y}"",
-            ""calcPos4_x"": ""{calcPos4_x}"",
-            ""calcPos4_y"": ""{calcPos4_y}""
-            }}";
-        UnityEngine.Debug.Log(requestBody);
+
+        string requestBody = GenerateRequestBody(positions);
+
         using (HttpClient client = new HttpClient())
         {       
             HttpResponseMessage response = await client.PostAsync(functionUrl, new StringContent(requestBody, Encoding.UTF8, "application/json"));

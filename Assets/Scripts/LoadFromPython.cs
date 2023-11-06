@@ -14,7 +14,7 @@ public class LoadFromPython : MonoBehaviour
     public void LoadFromPythonScript()
     {
         GetPositionsButton getPositionButton  = new GetPositionsButton();
-        List<Vector2> dotPositions = getPositionButton.GetPositionsForPython();
+        List<Vector2> dotPositions = getPositionButton.DefineCoordinatesToSendToAzure();
         ProcessStartInfo psi = new ProcessStartInfo
         {
             FileName = @"C:\\Python311\\python.exe",

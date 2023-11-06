@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ZeroMarkerScript : MonoBehaviour
 {
+    
     [SerializeField] private GameObject zeroMarkerDotPrefab;
     [SerializeField] Transform zeroMarkerParent;
 
@@ -48,7 +49,7 @@ public class ZeroMarkerScript : MonoBehaviour
             timeSinceLastUpdate = 0;
         }
     }
-
+    
     public Vector3 UseRealCoordinates(Transform dotWithOldOrigo)
     {
         Transform dot = zeroMarkerAssigned.transform.Find("ZeroDot");
@@ -66,4 +67,5 @@ public class ZeroMarkerScript : MonoBehaviour
 
         return offset;
     }
+    
 }

@@ -22,6 +22,13 @@ public class ProcessDotsPosition : MonoBehaviour
         DebugGameObjectCoordinates(listOfDotsCoordinates, "BEFORE: ");
         MakeDotsChildren(parentObject);
         DebugGameObjectCoordinates(listOfDotsCoordinates, "AFTER: ");
+        DoRotation(parentObject, center);
+    }
+
+    public void DoRotation(GameObject parentObject, Vector3 center)
+    {
+        float targetRotationAngle = 45.0f; //CUSTOM
+        parentObject.transform.RotateAround(center, Vector3.left, targetRotationAngle);      
     }
     public void MakeDotsChildren(GameObject parentObject)
     {

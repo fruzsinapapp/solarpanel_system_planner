@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ProcessDotsPosition : MonoBehaviour
 {
+    private float shiftX = 0f;
+    private float shiftY = 0f;
+    private float shiftZ = 0f;
 
     void Start()
     {
@@ -23,8 +27,46 @@ public class ProcessDotsPosition : MonoBehaviour
         MakeDotsChildren(parentObject);
         DebugGameObjectCoordinates(listOfDotsCoordinates, "AFTER: ");
         DoRotation(parentObject, center);
+        DebugGameObjectCoordinates(listOfDotsCoordinates, "AFTER ROTATION: ");
+        List<Vector3> normalizedCoordintes = NormalizeCoordinates(listOfDotsCoordinates);
+        DebugGameObjectCoordinates(normalizedCoordintes, "NORMALIZED AFTER ROTATION: ");
     }
+    public List<Vector3> NormalizeCoordinates(List<Vector3> coordinatesToNormalize)
+    {
+        float minX = 100;
+        float minY = 100;
+        float minZ = 100;
 
+        foreach (Vector3 coordinate in coordinatesToNormalize)
+        {
+            if (coordinate.x < minX)
+                minX = coordinate.x;
+            if (coordinate.y < minY)
+                minY = coordinate.y;
+            if (coordinate.z < minZ)
+                minZ = coordinate.z;
+        }
+
+        // Calculate the shift values
+        shiftX = Math.Abs(minX);
+        shiftY = Math.Abs(minY);
+        shiftZ = Math.Abs(minZ);
+
+        // Create an array for normalized coordinates
+        List<Vector3> normalizedCoordinates = new List<Vector3>();
+
+        // Add the shift values to the original coordinates
+        foreach (Vector3 coordinate in coordinatesToNormalize)
+        {
+            float x = coordinate.x + shiftX;
+            float y = coordinate.y + shiftY;
+            float z = coordinate.z + shiftZ;
+            Vector3 normalized = new Vector3(x, y, z);
+            normalizedCoordinates.Add(normalized);
+        }
+
+        return normalizedCoordinates;
+    }
     public void DoRotation(GameObject parentObject, Vector3 center)
     {
         float targetRotationAngle = 45.0f; //CUSTOM
